@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>SB Admin 2</title>
+  <script language="javascript">
+  </script>
+</head>
+
+<body>
+  Go to <a href="#">ZETWERK</a>
+
+  <button onclick="window.location = '/'">ADD OR EDIT Employee</button>
+  <button onclick="window.location = '/employee?page=1'">List Employee</button>
+
+  <br/><br/><br/><br/>
+  <form method="post" action="./employee" enctype="multipart/form-data">
+    File<input type="file" name="image" />
+
+
+    Name<input type="text" name="name" />
+    Salary<input type="text" name="salary" />
+    DOB<input type="text" name="dob" />
+    Skills<input type="text" name="skills" />
+    <button type="submit">ADD</button>
+  </form>
+
+  <br/><br/><br/>
+  <h2> EDIT BY ID</h2>
+
+  <form method="post" action="./editEmployee" enctype="multipart/form-data">
+    ID<input type="text" name="id" /><br/><br/>
+    File<input type="file" name="image" />
+    Name<input type="text" name="name" />
+    Salary<input type="text" name="salary" />
+    DOB<input type="text" name="dob" />
+    Skills<input type="text" name="skills" />
+    <button type="submit">Edit</button>
+  </form>
+
+  <br/><br/><br/>
+  <h2> Delete BY ID</h2>
+
+  <form method="post" action="./deleteEmployee" >
+    ID<input type="text" name="id" /><br/><br/>
+    <button type="submit">Delete</button>
+  </form>
+
+
+</body>
+
+</html>

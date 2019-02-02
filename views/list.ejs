@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SB Admin 2</title>
+<script language="javascript">
+</script>
+</head>
+<body>
+Go to <a href="#">ZETWERK</a>
+
+<button onclick="window.location = '/'">ADD OR EDIT Employee</button>
+<button onclick="window.location = '/employee?page=1'">List Employee</button>
+
+
+
+    <table>
+        <tr>
+        <th>ID. </th><th>Name</th><th>image URL</th><th>Salary: </th><th>DOB</th><th>__Skills__</th>
+        </tr> 
+    
+    <% if(list.length) {
+        list.forEach(function renderingList(item) { 
+             %> <tr>
+                 <td><%= item.id %></td>
+                   <td><%= item.name %></td>
+                   <td><%= item.imageURL %></td>
+                   <td><%= item.salary %></td>
+                   <td><%= item.dob %></td>
+                   <td><%= item.skills %></td>
+                 </tr>    
+    <% }) %>
+             </table>
+        
+        <%}%>
+    
+
+</body>
+</html>
