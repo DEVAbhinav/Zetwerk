@@ -28,6 +28,8 @@ var employee = new Schema({
     }
 });
 
+employee.index({ name: 'text', salary: 'text', skills: 'text'});
+
 employee.pre('save', function (next) {
     var doc = this;
     counter.findByIdAndUpdate({

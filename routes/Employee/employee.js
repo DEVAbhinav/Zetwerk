@@ -17,7 +17,7 @@ empl.validateRequest = function (req, res, next) {
     var postColumn = ["dob", "salary", "skills", "name"];
 
     nullCheckFailed = false;
-    postColumn.forEach(function checkingEntry (element) {
+    postColumn.forEach(function checkingEntry(element) {
         if (!body[element])
             nullCheckFailed = true;
     });
@@ -41,7 +41,7 @@ empl.validateRequest = function (req, res, next) {
         });
     }
 
-    
+
 
     // TODO add check on skills if skills values are fixed  
 
@@ -97,8 +97,11 @@ empl.add = function (req, res, next) {
 
 empl.update = function (req, res, next) {
 
-    if(!req.body.id){
-        return res.json({valid: 0, comment: "No id sent"});
+    if (!req.body.id) {
+        return res.json({
+            valid: 0,
+            comment: "No id sent"
+        });
     }
 
     util.log("Inside Update fn");
@@ -127,8 +130,11 @@ empl.update = function (req, res, next) {
         updateObj.skills = req.body.skills;
     }
 
-    if(_.isEmpty(updateObj))
-        return res.json({valid : 0, comment : "Nothing to Update"});
+    if (_.isEmpty(updateObj))
+        return res.json({
+            valid: 0,
+            comment: "Nothing to Update"
+        });
 
     Employee.findOneAndUpdate({
         id: req.body.id
@@ -175,26 +181,54 @@ empl.getEmployeeDetails = function (req, res, next) {
                 err: err
             });
         }
-        //return res.json(result);
         res.render('list.ejs', {
             list: result
         });
     })
 }
 
-empl.deleteEmployee  = function(req, res, next) {
-    if(!req.body.id) {
-        return res.json({valid: 0, comment: "Cannot delete without ID"});
+empl.deleteEmployee = function (req, res, next) {
+    if (!req.body.id) {
+        return res.json({
+            valid: 0,
+            comment: "Cannot delete without ID"
+        });
     }
-    Employee.findOneAndRemove({id : req.body.id}, function removeCB(err, result) {
-        if(err) {
-            return res.json({valid : 0,  comment: "Remove not successful"});
-        }
-        else
-        return res.json({valid :1, comment: result });
+    Employee.findOneAndRemove({
+        id: req.body.id
+    }, function removeCB(err, result) {
+        if (err) {
+            return res.json({
+                valid: 0,
+                comment: "Remove not successful"
+            });
+        } else
+            return res.json({
+                valid: 1,
+                comment: result
+            });
     });
 
 }
 
+empl.search = function search(req, res, next) {
+    var key = req.query.key;
+    Employee.find({
+        $or: [{
+            'name': new RegExp(key, 'i')
+        }, {
+            'skills': new RegExp(key, 'i')
+        }]
+    }, function (err, result) {
+        if(!err)
+        return res.render('list.ejs', {
+            list: result
+        });
+        else {
+            util.log("Some Error occured in Search" + err);
+            return res.redirect('/');
+        }
+    })
+}
 
 module.exports = empl;
